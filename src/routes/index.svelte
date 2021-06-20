@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-	import { toggle_class } from 'svelte/internal';
 	import Toggle from '../lib/toggle.svelte';
 
 	let toggles = [];
@@ -20,16 +19,16 @@ function getRandom() {
 			];
 		}
 	});
-
-	const handleOn = (event) => {
-		if (event.detail.value) {
-			status = 'on';
-		} else status = 'off';
-	};
 </script>
 
 {#each toggles as t}
-    <div style="margin-bottom: 5px;">
-        <Toggle id={t.id} value={t.value} on:state={handleOn} />
+    <div style="padding:0; margin:0;">
+        <div style="width:100px; display:inline-block">{t.id}:</div> <Toggle id={t.id} value={t.value} duration="200" />
     </div>
 {/each}
+
+<style>
+    div{
+        font-family: Arial, Helvetica, sans-serif;
+    }
+</style>

@@ -5,19 +5,24 @@
 
 	export let value = false;
 	export let id = '';
+    export let size=20;
+    export let onColor='#42d442'
+    export let offColor='#FFF'
+    export let multiplier=2;
+    export let duration=100;
 
 	const dispatch = createEventDispatcher();
 
-	const switchPosition = tweened(0, {
-		duration: 200,
+	const switchPosition = tweened(1, {
+		duration: duration,
 		easing: cubicOut
 	});
 
 	$: if (value) {
-		switchPosition.set(20);
+		switchPosition.set(size*(multiplier-1));
 		dispatch('state', {id, value:true});
 	} else {
-		switchPosition.set(0);
+		switchPosition.set(1);
 		dispatch('state', {id, value:false});
 	}
 
@@ -26,31 +31,32 @@
 	}
 </script>
 
-<div class="toggle_outer" class:on={value} on:click={handleClick}>
+<div class="toggle_outer" class:on={value} on:click={handleClick} style="--size:{size + 'px'}; --onColor:{onColor}; --offColor:{offColor}; --multiplier:{multiplier}; --duration:{duration + 'ms'} ">
 	<div class="toggle_knob" style="left:{$switchPosition}px">&nbsp;</div>
 </div>
 
 <style>
 	.toggle_outer {
-		background-color: white;
-		width: 40px;
-		height: 20px;
+		background-color: var(--offColor);
+		width: calc(var(--size)*var(--multiplier));
+		height: var(--size);
 		position: relative;
-		border-radius: 20px;
-		border: solid 1px black;
+		border-radius: var(--size);
+		border: solid 1px #000000;
 		user-select: none;
-		transition: all 200ms;
+		transition: all var(--duration);
         display: inline-block;
 	}
 
 	.on {
-		background-color: rgb(70, 255, 70);
+		background-color: var(--onColor);
 	}
 
 	.toggle_knob {
-		background-color: black;
-		width: 20px;
-		height: 20px;
+		background-color: #000000;
+        top: 1px;
+		width: calc(var(--size) - 2px);
+		height: calc(var(--size) - 2px);
 		border-radius: 50%;
 		position: absolute;
 		user-select: none;
