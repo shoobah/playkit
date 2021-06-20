@@ -1,18 +1,28 @@
 <script>
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
+	import { createEventDispatcher } from 'svelte';
 
-	let value = false;
+	export let value = false;
+	export let id = '';
+
+	const dispatch = createEventDispatcher();
 
 	const switchPosition = tweened(0, {
 		duration: 200,
 		easing: cubicOut
 	});
 
+	$: if (value) {
+		switchPosition.set(20);
+		dispatch('state', {id, value:true});
+	} else {
+		switchPosition.set(0);
+		dispatch('state', {id, value:false});
+	}
+
 	function handleClick() {
 		value = !value;
-		if (value) switchPosition.set(20);
-		else switchPosition.set(0);
 	}
 </script>
 
@@ -30,6 +40,7 @@
 		border: solid 1px black;
 		user-select: none;
 		transition: all 200ms;
+        display: inline-block;
 	}
 
 	.on {
