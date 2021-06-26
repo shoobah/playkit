@@ -7,7 +7,7 @@
 	export let id = '';
     export let size=20;
     export let onColor='#42d442'
-    export let offColor='#FFF'
+    export let offColor='#ccc'
     export let multiplier=2;
     export let duration=100;
 
@@ -22,7 +22,7 @@
 		switchPosition.set(size*(multiplier-1));
 		dispatch('state', {id, value:true});
 	} else {
-		switchPosition.set(1);
+		switchPosition.set(3);
 		dispatch('state', {id, value:false});
 	}
 
@@ -42,7 +42,7 @@
 		height: var(--size);
 		position: relative;
 		border-radius: var(--size);
-		border: solid 1px #000000;
+		/* border: solid 1px #000000; */
 		user-select: none;
 		transition: all var(--duration);
         display: inline-block;
@@ -53,11 +53,12 @@
 	}
 
 	.toggle_knob {
-		background-color: #000000;
+		background-color: #333;
         top: 1px;
-		width: calc(var(--size) - 2px);
-		height: calc(var(--size) - 2px);
+		width: calc(var(--size) - 3px);
+		height: calc(var(--size) - 3px);
 		border-radius: 50%;
+		border: none;
 		position: absolute;
 		user-select: none;
 	}
